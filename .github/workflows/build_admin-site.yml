@@ -1,0 +1,47 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+env:
+  OS2BORGERPC_VERSION: ''
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3.5.2
+      with:
+        repository: OS2borgerPC/admin-site
+    
+    - name: Get latest version from tag
+      run: git describe --tags --abbrev=0 >> OS2BORGERPC_VERSION
+      
+    - name: Checkout tag
+      run: |
+        echo 'git checkout tags/$OS2BORGERPC_VERSION'
+        git checkout tags/$OS2BORGERPC_VERSION
+        
+    # Login to docker hub using secrets in GitHub.
+    - name: Login to docker
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v4.0.0
+      with:
+        context: .
+        file: docker/Dockerfile
+        tags: kvalitetsit/os2borgerpc-admin:${{ env.$OS2BORGERPC_VERSION }}
+        push: true
+    

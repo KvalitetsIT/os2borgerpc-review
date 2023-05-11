@@ -17,11 +17,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: echo
+      run: |
+        pwd && ls
+        env
+      
     - name: Checkout
       uses: actions/checkout@v3.5.2
       with:
         repository: OS2borgerPC/admin-site
     
+    - name: echo
+      run: |
+        pwd && ls
+        env
+        
     - name: Get latest version from tag
       run: git describe --tags --abbrev=0 >> OS2BORGERPC_VERSION
       

@@ -30,9 +30,9 @@ jobs:
 
     - name: checkout tag
       run: |
-        git describe --tags --abbrev=0 >> $OS2BORGERPC_VERSION
-        echo checking out ${{ OS2BORGERPC_VERSION }}
-        git checkout tags/${{ OS2BORGERPC_VERSION }}
+        latesttag=$(git describe --tags --abbrev=0)
+        echo checking out ${latesttag}
+        git checkout tags/${latesttag}
     
     - name: echo
       run: |

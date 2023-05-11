@@ -26,6 +26,13 @@ jobs:
       uses: actions/checkout@v3.5.2
       with:
         repository: OS2borgerPC/admin-site
+        fetch-depth: 0
+
+    - name: checkout tag
+      run: |
+        git describe --tags --abbrev=0 >> OS2BORGERPC_VERSION
+        echo checking out ${{ OS2BORGERPC_VERSION }}
+        git checkout tags/${{ OS2BORGERPC_VERSION }}
     
     - name: echo
       run: |

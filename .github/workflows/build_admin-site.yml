@@ -30,22 +30,14 @@ jobs:
 
     - name: checkout tag
       run: |
-        latesttag=$(git describe --tags --abbrev=0)
-        echo checking out ${latesttag}
-        git checkout tags/${latesttag}
+        echo "latesttag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+        echo checking out ${{ env.latesttag }}
+        git checkout tags/${{ env.latesttag }}
     
     - name: echo
       run: |
         pwd && ls
         git status
-        
-    - name: Get latest version from tag
-      run: git describe --tags --abbrev=0 >> OS2BORGERPC_VERSION
-      
-    - name: Checkout tag
-      run: |
-        echo 'git checkout tags/$OS2BORGERPC_VERSION'
-        git checkout tags/$OS2BORGERPC_VERSION
         
     # Login to docker hub using secrets in GitHub.
     - name: Login to docker

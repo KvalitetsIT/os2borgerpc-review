@@ -20,7 +20,7 @@ jobs:
     - name: echo
       run: |
         pwd && ls
-        git status
+        env
       
     - name: Checkout
       uses: actions/checkout@v3.5.2
@@ -30,7 +30,7 @@ jobs:
     - name: echo
       run: |
         pwd && ls
-        env
+        git status
         
     - name: Get latest version from tag
       run: git describe --tags --abbrev=0 >> OS2BORGERPC_VERSION

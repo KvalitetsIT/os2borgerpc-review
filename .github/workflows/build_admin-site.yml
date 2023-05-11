@@ -30,14 +30,16 @@ jobs:
 
     - name: checkout tag
       run: |
-        echo "latesttag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-        echo checking out ${{ env.latesttag }}
-        git checkout tags/${{ env.latesttag }}
+        latesttag=$(git describe --tags --abbrev=0)
+        echo checking out ${latesttag}
+        git checkout tags/${latesttag}
+        echo "LATEST_TAG=${latesttag}" >> "$GITHUB_ENV"
     
     - name: echo
       run: |
         pwd && ls
         git status
+        env
         
     # Login to docker hub using secrets in GitHub.
     - name: Login to docker

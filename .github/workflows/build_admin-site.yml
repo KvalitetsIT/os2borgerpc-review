@@ -20,7 +20,7 @@ jobs:
     - name: echo
       run: |
         pwd && ls
-        env
+        git status
       
     - name: Checkout
       uses: actions/checkout@v3.5.2
